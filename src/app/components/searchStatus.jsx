@@ -1,3 +1,6 @@
+import React from "react";
+import PropTypes from "prop-types";
+
 const SearchStatus = ({ usersNumber }) => {
   const renderPhrase = (number) => {
     const plural = [2, 3, 4];
@@ -5,7 +8,6 @@ const SearchStatus = ({ usersNumber }) => {
     let human = "человек";
     if (plural.includes(number % 10)) human = "человекa";
     if (number > 10 && number < 20) human = "человек";
-
     return number !== 0 ? (
       <h1 className="badge fs-4 bg-primary m-2">
         С тобой хотят встретиться {number} {human}.
@@ -17,6 +19,10 @@ const SearchStatus = ({ usersNumber }) => {
     );
   };
   return <>{renderPhrase(usersNumber)}</>;
+};
+
+SearchStatus.propTypes = {
+  usersNumber: PropTypes.number.isRequired
 };
 
 export default SearchStatus;

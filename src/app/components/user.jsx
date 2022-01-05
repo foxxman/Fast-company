@@ -1,3 +1,5 @@
+import React from "react";
+import PropTypes from "prop-types";
 import Bookmark from "./bookmark";
 import Quality from "./quality";
 
@@ -30,6 +32,12 @@ const User = ({ handleBookmark, handleDelete, user }) => {
       </td>
     </tr>
   );
+};
+
+User.propTypes = {
+  user: PropTypes.object.isRequired,
+  handleBookmark: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired
 };
 
 export default User;

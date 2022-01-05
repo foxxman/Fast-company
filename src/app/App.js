@@ -10,11 +10,14 @@ const App = () => {
     setUsers((prevUsers) => prevUsers.filter((user) => user._id !== userId));
   };
 
-  const handleBookmark = (userId) => {
+  const handleBookmark = (id) => {
     setUsers((prevUsers) => {
-      const index = prevUsers.findIndex((user) => user._id === userId);
-      prevUsers[index].bookmark = !prevUsers[index].bookmark;
-      return [...prevUsers];
+      return prevUsers.map((user) => {
+        if (user._id === id) {
+          return { ...user, bookmark: !user.bookmark };
+        }
+        return user;
+      });
     });
   };
 
