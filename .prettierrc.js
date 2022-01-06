@@ -1,6 +1,8 @@
 module.exports = {
   trailingComma: "none",
+  semi: true,
+  // singleQuote: true,
   tabWidth: 2,
-  semi: true
-  // "eslint multiline-ternary": ["error", "always-multiline"]
+  // useTabs: false
+  endOfLine: "auto"
 };
