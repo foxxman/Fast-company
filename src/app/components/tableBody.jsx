@@ -5,7 +5,7 @@ import _ from "lodash";
 
 const TableBody = ({ data, columns }) => {
   const renderContent = (item, column) => {
-    /* если существует lumns[column].component, 
+    /* если существует columns[column].component, 
         то отображаем его, иначе _.get(item, columns[column].path) */
     // columns[column].component || _.get(item, columns[column].path);
     if (columns[column].component) {
