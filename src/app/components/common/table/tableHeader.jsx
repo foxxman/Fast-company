@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const TableHeader = ({ onSort, selectedSort, columns }) => {
   const handleSort = (item) => {
-    console.log("item:", item);
+    // console.log("item:", item);
     if (selectedSort.path === item)
       onSort({
         ...selectedSort,
@@ -12,7 +12,7 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
     else onSort({ path: item, order: "asc" });
   };
 
-  console.log(selectedSort);
+  // console.log(selectedSort);
 
   return (
     <thead>
