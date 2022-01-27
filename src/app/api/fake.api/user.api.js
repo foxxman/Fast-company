@@ -177,14 +177,18 @@ const fetchAll = () =>
       resolve(JSON.parse(localStorage.getItem("users")));
     }, 2000);
   });
-const update = (id, data) =>
-  new Promise((resolve) => {
+
+const update = (id, data) => {
+  console.log(id, data);
+
+  return new Promise((resolve) => {
     const users = JSON.parse(localStorage.getItem("users"));
     const userIndex = users.findIndex((u) => u._id === id);
     users[userIndex] = { ...users[userIndex], ...data };
     localStorage.setItem("users", JSON.stringify(users));
     resolve(users[userIndex]);
   });
+};
 
 const getById = (id) =>
   new Promise((resolve) => {

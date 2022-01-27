@@ -11,7 +11,7 @@ const UserInfo = ({ user }) => {
       <div>
         <Qualities qualities={user.qualities} />
       </div>
-      <p>{`Встречь: ${user.completedMeetings}`}</p>
+      <p>{`Встреч: ${user.completedMeetings}`}</p>
       <p>{`Рейтинг: ${user.rate}`}</p>
       <Link to={`/users/${user._id}/edit`}>
         <button>Изменить</button>

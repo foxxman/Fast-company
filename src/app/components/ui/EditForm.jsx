@@ -6,16 +6,17 @@ import SelectField from "../common/form/selectFielf";
 import RadioField from "../common/form/radioField";
 import MultiSelectField from "../common/form/multiSelectField";
 import PropTypes from "prop-types";
+import { useHistory } from "react-router-dom";
 
 const EditForm = ({ userId }) => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState();
   const [errors, setErrors] = useState({});
   const [professions, setProfessions] = useState();
   const [qualities, setQualities] = useState({});
+  const history = useHistory();
 
   useEffect(() => {
     validate();
-    // console.log("new data", data);
   }, [data]);
 
   useEffect(() => {
@@ -23,19 +24,16 @@ const EditForm = ({ userId }) => {
     API.qualities.fetchAll().then((result) => setQualities(result));
   }, []);
 
+  const handleSave = () => history.push(`/users/${userId}`);
+
   useEffect(() => {
     API.users.getById(userId).then((result) => {
-      // console.log("data from API", result);
-
       setData((prevData) => ({
         ...prevData,
-        name: result.name,
-        email: result.email,
-        profession: result.profession.name,
-        sex: result.sex,
+        ...result,
+        profession: result.profession._id,
         qualities: correctQualities(result.qualities)
       }));
-      // console.log("correctQualities", correctQualities(result.qualities));
     });
   }, []);
 
@@ -47,15 +45,15 @@ const EditForm = ({ userId }) => {
   };
 
   const validatorConfig = {
+    name: {
+      isRequired: { message: "Имя не может быть пустым" }
+    },
     email: {
       isRequired: { message: "Электронная почта обязательна к заполнению" },
       isEmail: { message: "Email введен некорректно" }
     },
     profession: {
       isRequired: { message: "Это поле обязательно для заполнения" }
-    },
-    licence: {
-      isRequired: { message: "Пожалуйста, подтвердите лицензионное соглашение" }
     }
   };
 
@@ -71,20 +69,44 @@ const EditForm = ({ userId }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const isValidate = validate();
-    console.log(errors);
-    if (isValidate) return;
-    console.log(data);
+    const updatedData = {
+      ...data,
+      qualities:
+        // приводим качества в начальный формат
+        data.qualities.map((quality) => {
+          return {
+            _id: quality.value,
+            name: quality.label,
+            color:
+              // в объекте качеств находим нужный цвет
+              qualities[
+                Object.keys(qualities).find(
+                  (qualityKey) => qualities[qualityKey]._id === quality.value
+                )
+              ].color
+          };
+        }),
+      profession:
+        // находим объект профессии
+        professions[
+          Object.keys(professions).find((professionKey) => {
+            return professions[professionKey]._id === data.profession;
+          })
+        ]
+    };
+    if (isValidate) API.users.update(updatedData._id, updatedData);
+    handleSave();
   };
 
   const validate = () => {
     const errors = validator(data, validatorConfig);
     setErrors(errors);
-    return Object.keys(errors) === 0;
+    return Object.keys(errors).length === 0;
   };
 
   const isValid = Object.keys(errors).length === 0;
 
-  return (
+  return data ? (
     <form onSubmit={handleSubmit}>
       <TextField
         label="Ваше имя"
@@ -139,6 +161,8 @@ const EditForm = ({ userId }) => {
         Edit information
       </button>
     </form>
+  ) : (
+    <p>Loading...</p>
   );
 };
 

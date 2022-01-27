@@ -58,7 +58,7 @@ const UserListPage = () => {
     setSortBy(item);
   };
 
-  const handleSearchChange = ({ target }) => setSearchName(target.value);
+  const handleSearchChange = (target) => setSearchName(target.value);
 
   const searchUsers = (users, searchString) => {
     return users.filter((user) =>
@@ -104,6 +104,7 @@ const UserListPage = () => {
             value={searchName}
             onChange={handleSearchChange}
             placeholder="Search..."
+            noDetecting={true}
           />
 
           {count ? (

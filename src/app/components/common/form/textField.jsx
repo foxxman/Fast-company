@@ -8,7 +8,8 @@ const TextField = ({
   value,
   onChange,
   error,
-  placeholder
+  placeholder,
+  noDetecting
 }) => {
   const [showPassword, setShowPassword] = useState();
 
@@ -17,7 +18,9 @@ const TextField = ({
   };
 
   const getInputClasses = () => {
-    return "form-control" + (error ? " is-invalid" : " is-valid");
+    if (!noDetecting)
+      return "form-control" + (error ? " is-invalid" : " is-valid");
+    else return "form-control";
   };
 
   const toggleShowPassword = () => {
@@ -64,7 +67,8 @@ TextField.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func,
   error: PropTypes.string,
-  placeholder: PropTypes.string
+  placeholder: PropTypes.string,
+  noDetecting: PropTypes.bool
 };
 
 export default TextField;
