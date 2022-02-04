@@ -147,7 +147,7 @@ const EditForm = ({ userId }) => {
         options={professions}
         defaultOption="Choose..."
         onChange={handleChange}
-        name="professions"
+        name="profession"
         error={errors.profession}
         label="Выберете вашу профессию"
         value={data.profession}

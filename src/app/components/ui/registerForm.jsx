@@ -76,7 +76,7 @@ const RegitsterForm = () => {
   const validate = () => {
     const errors = validator(data, validatorConfig);
     setErrors(errors);
-    return Object.keys(errors) === 0;
+    return Object.keys(errors).length === 0;
   };
 
   const isValid = Object.keys(errors).length === 0;
@@ -122,7 +122,7 @@ const RegitsterForm = () => {
         options={professions}
         defaultOption="Choose..."
         onChange={handleChange}
-        name="professions"
+        name="profession"
         error={errors.profession}
         label="Выберете вашу профессию"
         value={data.profession}

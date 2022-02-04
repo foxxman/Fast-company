@@ -36,7 +36,7 @@ const SelectField = ({
         className={getInputClasses()}
         id={name}
         required
-        name="profession"
+        name={name}
         onChange={handleChange}
       >
         <option disabled value="">

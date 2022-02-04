@@ -1,21 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Qualities from "../../ui/qualities";
-import { Link } from "react-router-dom";
+import CommentsList from "../../ui/CommentsList";
+import UserCard from "../../ui/UserCard";
+import QualitiesCard from "../../ui/QualitiesCard";
+import MeetingsCard from "../../ui/MeetingsCard";
 
 const UserInfo = ({ user }) => {
   return (
-    <div>
-      <h1>{user.name}</h1>
-      <h2>{`Профессия: ${user.profession.name}`}</h2>
-      <div>
-        <Qualities qualities={user.qualities} />
+    <div className="container">
+      <div className="row gutters-sm">
+        <div className="col-md-4 mb-3">
+          {/* =========CARD======== */}
+          <UserCard {...{ user }} />
+          {/* =========CARD======== */}
+          <QualitiesCard qualities={user.qualities} />
+          {/* =========CARD======== */}
+          <MeetingsCard completedMeetings={user.completedMeetings} />
+        </div>
+        <div className="col-md-8">
+          <CommentsList />
+        </div>
       </div>
-      <p>{`Встреч: ${user.completedMeetings}`}</p>
-      <p>{`Рейтинг: ${user.rate}`}</p>
-      <Link to={`/users/${user._id}/edit`}>
-        <button>Изменить</button>
-      </Link>
     </div>
   );
 };

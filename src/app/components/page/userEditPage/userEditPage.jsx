@@ -2,6 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import UsersListPage from "../usersListPage";
 import EditForm from "../../ui/EditForm";
+import BackButton from "../../common/backButton";
 
 const UserEditPage = () => {
   const params = useParams();
@@ -11,6 +12,7 @@ const UserEditPage = () => {
     <>
       {userId ? (
         <div className="container mt-5">
+          <BackButton />
           <div className="row">
             <div className="col-md-6 offset-md-3 shadow p-4">
               <h3 className="mb-4">Edit</h3>
