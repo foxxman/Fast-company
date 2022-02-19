@@ -3,10 +3,11 @@ import PropTypes from "prop-types";
 import Quality from "./quality";
 
 const QualitiesList = ({ qualities }) => {
+  // console.log("qualities", qualities);
   return (
     <>
       {qualities.map((quality) => (
-        <Quality key={quality._id} quality={quality} />
+        <Quality key={quality} qualityId={quality} />
       ))}
     </>
   );
