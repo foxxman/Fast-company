@@ -41,13 +41,16 @@ export const QualityProvider = ({ children }) => {
 
   return (
     <QualityContext.Provider value={{ qualities, getQuality }}>
-      {!isLoading ? children : "Loading..."}
+      {!isLoading ? children : <h1>Loading...</h1>}
     </QualityContext.Provider>
   );
 };
 
 QualityProvider.propTypes = {
-  children: PropTypes.oneOf([PropTypes.arrayOf(PropTypes.node), PropTypes.node])
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ])
 };
 
 export default QualityProvider;

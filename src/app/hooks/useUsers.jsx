@@ -42,13 +42,16 @@ const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider value={{ users }}>
-      {!isLoading ? children : "Loading..."}
+      {!isLoading ? children : <h1>Loading...</h1>}
     </UserContext.Provider>
   );
 };
 
 UserProvider.propTypes = {
-  children: PropTypes.oneOf([PropTypes.arrayOf(PropTypes.node), PropTypes.node])
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ])
 };
 
 export default UserProvider;

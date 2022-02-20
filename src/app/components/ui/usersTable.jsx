@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Bookmark from "../common/bookmark";
+// import Bookmark from "../common/bookmark";
 import Qualities from "./qualities";
 import Table from "../common/table/index";
 import { Link } from "react-router-dom";
@@ -35,28 +35,28 @@ const UsersTable = ({
       path: "completedMeetings",
       name: "Встретился, раз"
     },
-    rate: { path: "rate", name: "Оценка" },
-    bookmark: {
-      path: "bookmark",
-      name: "Избранное",
-      component: (user) => (
-        <Bookmark
-          id={user._id}
-          handleBookmark={handleBookmark}
-          bookmark={user.bookmark}
-        />
-      )
-    },
-    delete: {
-      component: (user) => (
-        <button
-          className="btn btn-danger btn-sm d-block m-auto"
-          onClick={() => handleDelete(user._id)}
-        >
-          Delete
-        </button>
-      )
-    }
+    rate: { path: "rate", name: "Оценка" }
+    // bookmark: {
+    //   path: "bookmark",
+    //   name: "Избранное",
+    //   component: (user) => (
+    //     <Bookmark
+    //       id={user._id}
+    //       handleBookmark={handleBookmark}
+    //       bookmark={user.bookmark}
+    //     />
+    //   )
+    // },
+    // delete: {
+    //   component: (user) => (
+    //     <button
+    //       className="btn btn-danger btn-sm d-block m-auto"
+    //       onClick={() => handleDelete(user._id)}
+    //     >
+    //       Delete
+    //     </button>
+    //   )
+    // }
   };
 
   return <Table {...{ onSort, selectedSort, columns, data: users }} />;

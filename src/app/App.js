@@ -13,16 +13,17 @@ const App = () => {
   return (
     <div>
       <NavBar />
-      <Switch>
-        <QualityProvider>
-          <ProfessionProvider>
+      <QualityProvider>
+        <ProfessionProvider>
+          <Switch>
             <Route path="/users/:userId?/edit" component={UserEditPage} />
             <Route path="/users/:userId?" component={Users} />
             <Route path="/login/:type?" component={Login} />
-          </ProfessionProvider>
-        </QualityProvider>
-        <Route path="/" exact component={Main} />
-      </Switch>
+
+            <Route path="/" exact component={Main} />
+          </Switch>
+        </ProfessionProvider>
+      </QualityProvider>
       <ToastContainer />
     </div>
   );

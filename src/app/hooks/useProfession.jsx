@@ -48,13 +48,16 @@ export const ProfessionProvider = ({ children }) => {
     <ProfessionContext.Provider
       value={{ isLoading, professions, getProfession }}
     >
-      {!isLoading ? children : "Loading..."}
+      {children}
     </ProfessionContext.Provider>
   );
 };
 
 ProfessionProvider.propTypes = {
-  children: PropTypes.oneOf([PropTypes.arrayOf(PropTypes.node), PropTypes.node])
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ])
 };
 
 export default ProfessionProvider;

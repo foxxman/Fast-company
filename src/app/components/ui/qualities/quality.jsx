@@ -6,7 +6,9 @@ const Quality = ({ qualityId }) => {
   const { getQuality } = useQuality();
   const quality = getQuality(qualityId);
   return (
-    <span className={`badge bg-${quality.color} m-1`}>{quality.name}</span>
+    quality && (
+      <span className={`badge bg-${quality.color} m-1`}>{quality.name}</span>
+    )
   );
 };
 
