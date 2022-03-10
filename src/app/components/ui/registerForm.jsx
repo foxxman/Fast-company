@@ -13,6 +13,7 @@ import { useHistory } from "react-router-dom";
 const RegitsterForm = () => {
   const history = useHistory();
   const [data, setData] = useState({
+    name: "",
     email: "",
     password: "",
     profession: "",
@@ -39,6 +40,13 @@ const RegitsterForm = () => {
     email: {
       isRequired: { message: "Электронная почта обязательна к заполнению" },
       isEmail: { message: "Email введен некорректно" }
+    },
+    name: {
+      isRequired: { message: "Имя обязательно к заполнению" },
+      min: {
+        value: 2,
+        message: `Имя должно содержать минимум 2 символа`
+      }
     },
     password: {
       isRequired: { message: "Пароль обязателен к заполнению" },
@@ -75,12 +83,12 @@ const RegitsterForm = () => {
     event.preventDefault();
 
     const isValidate = validate();
-    console.log("errors", errors);
+    // console.log("errors", errors);
 
     if (!isValidate) return;
 
     const newData = { ...data, qualities: data.qualities.map((q) => q.value) };
-    console.log("data", newData);
+    // console.log("data", newData);
     try {
       await signUp(newData);
       history.push("/");
@@ -105,6 +113,13 @@ const RegitsterForm = () => {
         value={data.email}
         onChange={handleChange}
         error={errors.email}
+      />
+      <TextField
+        label="Ваше имя"
+        name="name"
+        value={data.name}
+        onChange={handleChange}
+        error={errors.name}
       />
       <TextField
         label="Пароль"

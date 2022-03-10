@@ -1,48 +1,47 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import TextField from "../common/form/textField";
 import { validator } from "../../utils/validator";
-import API from "../../api";
 import SelectField from "../common/form/selectFielf";
 import RadioField from "../common/form/radioField";
 import MultiSelectField from "../common/form/multiSelectField";
-import PropTypes from "prop-types";
-import { useHistory } from "react-router-dom";
+import { useProfessions } from "../../hooks/useProfession";
+import { useQuality } from "../../hooks/useQuality";
+import { useAuth } from "../../hooks/useAuth";
+import { useParams, useHistory } from "react-router-dom";
 
-const EditForm = ({ userId }) => {
-  const [data, setData] = useState();
+const EditForm = () => {
+  const { userId } = useParams();
+  const { currentUser, updateUser, isLoading: userLoading } = useAuth();
+  const { professions, isLoading: profLoading } = useProfessions();
+  const { qualities, getQuality, isLoading: qualLoading } = useQuality();
+
+  const [data, setData] = useState({
+    ...currentUser,
+    qualities: getQualities(currentUser.qualities)
+  });
   const [errors, setErrors] = useState({});
-  const [professions, setProfessions] = useState();
-  const [qualities, setQualities] = useState({});
   const history = useHistory();
+
+  if (userId !== currentUser._id)
+    history.push(`/users/${currentUser._id}/edit`);
 
   useEffect(() => {
     validate();
   }, [data]);
 
-  useEffect(() => {
-    API.professions.fetchAll().then((result) => setProfessions(result));
-    API.qualities.fetchAll().then((result) => setQualities(result));
-  }, []);
-
   const handleSave = () => history.push(`/users/${userId}`);
 
-  useEffect(() => {
-    API.users.getById(userId).then((result) => {
-      setData((prevData) => ({
-        ...prevData,
-        ...result,
-        profession: result.profession._id,
-        qualities: correctQualities(result.qualities)
-      }));
-    });
-  }, []);
-
-  const correctQualities = (qualities) => {
-    return qualities.map((quality) => ({
-      label: quality.name,
-      value: quality._id
+  function correctItems(items) {
+    return items.map((item) => ({
+      label: item.name,
+      value: item._id
     }));
-  };
+  }
+
+  function getQualities(idArray) {
+    return correctItems(idArray.map((id) => getQuality(id)));
+  }
 
   const validatorConfig = {
     name: {
@@ -69,32 +68,16 @@ const EditForm = ({ userId }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const isValidate = validate();
+
     const updatedData = {
       ...data,
       qualities:
         // приводим качества в начальный формат
-        data.qualities.map((quality) => {
-          return {
-            _id: quality.value,
-            name: quality.label,
-            color:
-              // в объекте качеств находим нужный цвет
-              qualities[
-                Object.keys(qualities).find(
-                  (qualityKey) => qualities[qualityKey]._id === quality.value
-                )
-              ].color
-          };
-        }),
-      profession:
-        // находим объект профессии
-        professions[
-          Object.keys(professions).find((professionKey) => {
-            return professions[professionKey]._id === data.profession;
-          })
-        ]
+        data.qualities.map((quality) => quality.value)
     };
-    if (isValidate) API.users.update(updatedData._id, updatedData);
+    if (isValidate) {
+      updateUser(updatedData);
+    }
     handleSave();
   };
 
@@ -106,7 +89,7 @@ const EditForm = ({ userId }) => {
 
   const isValid = Object.keys(errors).length === 0;
 
-  return data ? (
+  return data && !qualLoading && !profLoading && !userLoading ? (
     <form onSubmit={handleSubmit}>
       <TextField
         label="Ваше имя"
@@ -135,16 +118,17 @@ const EditForm = ({ userId }) => {
         value={data.sex}
         name="sex"
       />
+
       <MultiSelectField
         name="qualities"
-        options={qualities}
+        options={correctItems(qualities)}
         onChange={handleChange}
         label="Выберите ваши качества"
         defaultValue={data.qualities}
       />
 
       <SelectField
-        options={professions}
+        options={correctItems(professions)}
         defaultOption="Choose..."
         onChange={handleChange}
         name="profession"

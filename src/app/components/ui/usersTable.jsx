@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-// import Bookmark from "../common/bookmark";
+import Bookmark from "../common/bookmark";
 import Qualities from "./qualities";
 import Table from "../common/table/index";
 import { Link } from "react-router-dom";
@@ -8,7 +8,7 @@ import Profession from "./profession";
 
 const UsersTable = ({
   users,
-  handleDelete,
+  // handleDelete,
   handleBookmark,
   onSort,
   selectedSort
@@ -32,21 +32,21 @@ const UsersTable = ({
       name: "Профессия"
     },
     completedMeetings: {
-      path: "completedMeetings",
+      path: "complitedMeetings",
       name: "Встретился, раз"
     },
-    rate: { path: "rate", name: "Оценка" }
-    // bookmark: {
-    //   path: "bookmark",
-    //   name: "Избранное",
-    //   component: (user) => (
-    //     <Bookmark
-    //       id={user._id}
-    //       handleBookmark={handleBookmark}
-    //       bookmark={user.bookmark}
-    //     />
-    //   )
-    // },
+    rate: { path: "rate", name: "Оценка" },
+    bookmark: {
+      path: "bookmark",
+      name: "Избранное",
+      component: (user) => (
+        <Bookmark
+          id={user._id}
+          handleBookmark={handleBookmark}
+          bookmark={false}
+        />
+      )
+    }
     // delete: {
     //   component: (user) => (
     //     <button
@@ -64,7 +64,7 @@ const UsersTable = ({
 
 UsersTable.propTypes = {
   handleBookmark: PropTypes.func.isRequired,
-  handleDelete: PropTypes.func.isRequired,
+  // handleDelete: PropTypes.func.isRequired,
   onSort: PropTypes.func.isRequired,
   selectedSort: PropTypes.object.isRequired,
   users: PropTypes.array.isRequired

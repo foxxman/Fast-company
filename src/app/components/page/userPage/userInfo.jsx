@@ -4,6 +4,7 @@ import CommentsList from "../../ui/CommentsList";
 import UserCard from "../../ui/UserCard";
 import QualitiesCard from "../../ui/QualitiesCard";
 import MeetingsCard from "../../ui/MeetingsCard";
+import CommentsProvider from "../../../hooks/useComments";
 
 const UserInfo = ({ user }) => {
   return (
@@ -15,10 +16,12 @@ const UserInfo = ({ user }) => {
           {/* =========CARD======== */}
           <QualitiesCard qualities={user.qualities} />
           {/* =========CARD======== */}
-          <MeetingsCard completedMeetings={user.completedMeetings} />
+          <MeetingsCard completedMeetings={user.complitedMeetings} />
         </div>
         <div className="col-md-8">
-          <CommentsList />
+          <CommentsProvider>
+            <CommentsList />
+          </CommentsProvider>
         </div>
       </div>
     </div>

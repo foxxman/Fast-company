@@ -1,28 +1,22 @@
 import React, { useEffect, useState } from "react";
-import API from "../../api";
+// import API from "../../api";
 import PropTypes from "prop-types";
 import { validator } from "../../utils/validator";
-import SelectField from "../common/form/selectFielf";
 import TextAreaField from "../common/form/textAreaField";
 import { useParams } from "react-router-dom";
+import { useComments } from "../../hooks/useComments";
 
 const CommentForm = ({ updateComments }) => {
   const pageId = useParams().userId;
+  const { createComment } = useComments();
 
   const initialData = {
     pageId: pageId,
-    userId: "",
     content: ""
   };
 
   const [data, setData] = useState(initialData);
-  const [users, setUsers] = useState();
   const [errors, setErrors] = useState({});
-
-  useEffect(
-    () => API.users.fetchAll().then((result) => setUsers(correctUsers(result))),
-    []
-  );
 
   useEffect(() => {
     validate();
@@ -31,9 +25,6 @@ const CommentForm = ({ updateComments }) => {
   const validatorConfig = {
     content: {
       isRequired: { message: "Enter your comment" }
-    },
-    userId: {
-      isRequired: { message: "Who are you?" }
     }
   };
 
@@ -42,10 +33,6 @@ const CommentForm = ({ updateComments }) => {
     setErrors(errors);
     // console.log("errors", Object.keys(errors).length === 0);
     return Object.keys(errors).length === 0;
-  };
-
-  const correctUsers = (users) => {
-    return users.map((user) => ({ name: user.name, value: user._id }));
   };
 
   const handleChange = (target) => {
@@ -62,11 +49,10 @@ const CommentForm = ({ updateComments }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const isValidate = validate();
-    // console.log(isValidate);
-    // console.log("add data ", data);
     setData(initialData);
-    if (isValidate)
-      API.comments.add(data).then((newComment) => updateComments(newComment));
+    if (isValidate) createComment(data);
+
+    //   API.comments.add(data).then((newComment) => updateComments(newComment));
   };
 
   const isValid = Object.keys(errors).length === 0;
@@ -75,19 +61,10 @@ const CommentForm = ({ updateComments }) => {
     <>
       <h2>New comments</h2>
       <form onSubmit={handleSubmit}>
-        <SelectField
-          options={users}
-          defaultOption="Choose user"
-          onChange={handleChange}
-          name="userId"
-          error={errors.userId}
-          value={data.userId}
-        />
-
         <TextAreaField
           label="Message"
           name="content"
-          value={data.content}
+          value={data.content || ""}
           onChange={handleChange}
           error={errors.content}
         />

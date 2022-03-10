@@ -23,6 +23,10 @@ module.exports = {
         endOfLine: "auto"
       }
     ],
-    quotes: ["error", "double", { allowTemplateLiterals: true }]
+    quotes: [
+      "error",
+      "double",
+      { allowTemplateLiterals: true, avoidEscape: true }
+    ]
   }
 };

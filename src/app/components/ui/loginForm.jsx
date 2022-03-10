@@ -10,7 +10,6 @@ const LoginForm = () => {
   const history = useHistory();
 
   const { signIn } = useAuth();
-  // console.log(process.env);
   const [data, setData] = useState({ email: "", password: "", stayOn: "" });
   const [errors, setErrors] = useState({});
 
@@ -75,7 +74,9 @@ const LoginForm = () => {
     if (isValidate) return;
     try {
       await signIn(data);
-      history.push("/");
+      history.push(
+        history.location.state ? history.location.state.from.pathname : "/"
+      );
     } catch (error) {
       setErrors(error);
     }

@@ -1,27 +1,18 @@
-import React, { useEffect, useState } from "react";
-import API from "../../api";
+import React from "react";
 import Comment from "../common/comment";
 import CommentForm from "./commentForm";
-import { useParams } from "react-router-dom";
+import { useComments } from "../../hooks/useComments";
 
 const CommentsList = () => {
-  const [comments, setComments] = useState();
-  const { userId } = useParams();
-  const updateComments = (comment) => {
-    setComments((prev) => [...prev, comment]);
-  };
+  const { comments, removeComment } = useComments();
 
-  useEffect(() => {
-    API.comments.fetchCommentsForUser(userId).then((result) => {
-      setComments(result);
-    });
-  }, []);
+  const updateComments = (comment) => {
+    // setComments((prev) => [...prev, comment]);
+  };
 
   const handleDelete = (id) => {
-    API.comments.remove(id);
-    setComments((prev) => prev.filter((comment) => comment._id !== id));
+    removeComment(id);
   };
-
   return (
     <>
       <div className="card mb-2">

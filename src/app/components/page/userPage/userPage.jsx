@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import API from "../../../api";
 import UserInfo from "./userInfo";
+import { useUser } from "../../../hooks/useUsers";
 
 const UserPage = ({ userId }) => {
-  const [user, setUser] = useState();
-  useEffect(() => API.users.getById(userId).then((user) => setUser(user)), []);
+  const { getUserById } = useUser();
+  const user = getUserById(userId);
 
   return user ? <UserInfo {...{ user }} /> : <h1>Loading...</h1>;
 };
