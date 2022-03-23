@@ -1,38 +1,35 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Bookmark from "../common/bookmark";
+
+import BookMark from "../common/bookmark";
 import Qualities from "./qualities";
-import Table from "../common/table/index";
+import Table from "../common/table";
 import { Link } from "react-router-dom";
 import Profession from "./profession";
 
-const UsersTable = ({
+const UserTable = ({
   users,
-  // handleDelete,
-  handleBookmark,
   onSort,
-  selectedSort
+  selectedSort,
+  onToggleBookMark,
+  ...rest
 }) => {
   const columns = {
     name: {
       path: "name",
       name: "Имя",
-      component: (user) => (
-        <Link className="nav-link" to={`/users/${user._id}`}>
-          {user.name}
-        </Link>
-      )
+      component: (user) => <Link to={`/users/${user._id}`}>{user.name}</Link>
     },
     qualities: {
       name: "Качества",
       component: (user) => <Qualities qualities={user.qualities} />
     },
-    profession: {
-      component: (user) => <Profession id={user.profession} />,
-      name: "Профессия"
+    professions: {
+      name: "Профессия",
+      component: (user) => <Profession id={user.profession} />
     },
     completedMeetings: {
-      path: "complitedMeetings",
+      path: "completedMeetings",
       name: "Встретился, раз"
     },
     rate: { path: "rate", name: "Оценка" },
@@ -40,34 +37,28 @@ const UsersTable = ({
       path: "bookmark",
       name: "Избранное",
       component: (user) => (
-        <Bookmark
-          id={user._id}
-          handleBookmark={handleBookmark}
-          bookmark={false}
+        <BookMark
+          status={user.bookmark}
+          onClick={() => onToggleBookMark(user._id)}
         />
       )
     }
-    // delete: {
-    //   component: (user) => (
-    //     <button
-    //       className="btn btn-danger btn-sm d-block m-auto"
-    //       onClick={() => handleDelete(user._id)}
-    //     >
-    //       Delete
-    //     </button>
-    //   )
-    // }
   };
-
-  return <Table {...{ onSort, selectedSort, columns, data: users }} />;
+  return (
+    <Table
+      onSort={onSort}
+      selectedSort={selectedSort}
+      columns={columns}
+      data={users}
+    />
+  );
 };
 
-UsersTable.propTypes = {
-  handleBookmark: PropTypes.func.isRequired,
-  // handleDelete: PropTypes.func.isRequired,
+UserTable.propTypes = {
+  users: PropTypes.array.isRequired,
   onSort: PropTypes.func.isRequired,
   selectedSort: PropTypes.object.isRequired,
-  users: PropTypes.array.isRequired
+  onToggleBookMark: PropTypes.func.isRequired
 };
 
-export default UsersTable;
+export default UserTable;

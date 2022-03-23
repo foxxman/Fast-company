@@ -36,7 +36,7 @@ const users = [
   {
     _id: "67rdca3eeb7f6fgeed471815",
     name: "Джон Дориан",
-    email: "johndorian@fastcompany.ru",
+    email: "Jony7351@tw.com",
     sex: "male",
     profession: professions.doctor,
     qualities: [qualities.tedious, qualities.uncertain, qualities.strange],
@@ -47,7 +47,7 @@ const users = [
   {
     _id: "67rdca3eeb7f6fgeed471816",
     name: "Кокс",
-    email: "koks@fastcompany.ru",
+    email: "white4571@twipet.com",
     sex: "male",
     profession: professions.doctor,
     qualities: [qualities.buller, qualities.handsome, qualities.alcoholic],
@@ -58,7 +58,7 @@ const users = [
   {
     _id: "67rdca3eeb7f6fgeed471817",
     name: "Боб Келсо",
-    email: "bobkelso@fastcompany.ru",
+    email: "bob007@tw.com",
     sex: "male",
     profession: professions.doctor,
     qualities: [qualities.buller],
@@ -69,7 +69,7 @@ const users = [
   {
     _id: "67rdca3eeb7f6fgeed471818",
     name: "Рэйчел Грин",
-    email: "rachelgreene@fastcompany.ru",
+    email: "green7311@fam.biz",
     sex: "female",
     profession: professions.waiter,
     qualities: [qualities.uncertain],
@@ -80,7 +80,7 @@ const users = [
   {
     _id: "67rdca3eeb7f6fgeed471819",
     name: "Шелдон Купер",
-    email: "sheldoncooper@fastcompany.ru",
+    email: "mindgames6878@phis.tech",
     sex: "male",
     profession: professions.physics,
     qualities: [qualities.strange, qualities.tedious],
@@ -91,7 +91,7 @@ const users = [
   {
     _id: "67rdca3eeb7f6fgeed471820",
     name: "Леонард Хофстедтер",
-    email: "leonardhofstedter@fastcompany.ru",
+    email: "mindes000@phis.tech",
     sex: "male",
     profession: professions.physics,
     qualities: [qualities.strange, qualities.uncertain],
@@ -102,7 +102,7 @@ const users = [
   {
     _id: "67rdca3eeb7f6fgeed471821",
     name: "Говард Воловиц",
-    email: "howardwolowitz@fastcompany.ru",
+    email: "gov1903@phis.tech",
     sex: "male",
     profession: professions.engineer,
     qualities: [qualities.strange, qualities.tedious],
@@ -113,7 +113,7 @@ const users = [
   {
     _id: "67rdca3eeb7f6fgeed471822",
     name: "Никола Тесла",
-    email: "nikolatesla@fastcompany.ru",
+    email: "electro@underground.tech",
     sex: "male",
     profession: professions.engineer,
     qualities: [qualities.handsome],
@@ -124,7 +124,7 @@ const users = [
   {
     _id: "67rdca3eeb7f6fgeed471823",
     name: "Моника Геллер",
-    email: "monicageller@fastcompany.ru",
+    email: "mono@super.com",
     sex: "female",
     profession: professions.cook,
     qualities: [qualities.strange, qualities.uncertain],
@@ -135,7 +135,7 @@ const users = [
   {
     _id: "67rdca3eeb7f6fgeed471824",
     name: "Рататуй",
-    email: "ratatouille@fastcompany.ru",
+    email: "ratatatata@underground.com",
     sex: "male",
     profession: professions.cook,
     qualities: [qualities.handsome, qualities.buller],
@@ -146,7 +146,7 @@ const users = [
   {
     _id: "67rdca3eeb7f6fgeed47181f",
     name: "Джоуи Триббиани",
-    email: "joeytribbiani@fastcompany.ru",
+    email: "joe@trib.com",
     sex: "male",
     profession: professions.actor,
     qualities: [qualities.uncertain, qualities.strange],
@@ -157,7 +157,7 @@ const users = [
   {
     _id: "67rdca3eeb7f6fgeed47181r",
     name: "Брэд Питт",
-    email: "bradpitt@fastcompany.ru",
+    email: "superstar@star.com",
     sex: "male",
     profession: professions.actor,
     qualities: [qualities.handsome],

@@ -10,29 +10,27 @@ const MultiSelectField = ({ options, onChange, name, label, defaultValue }) => {
           value: options[optionName]._id
         }))
       : options;
-
   const handleChange = (value) => {
     onChange({ name: name, value });
   };
-
   return (
     <div className="mb-4">
       <label className="form-label">{label}</label>
       <Select
-        closeMenuOnSelect={false}
         isMulti
+        closeMenuOnSelect={false}
         defaultValue={defaultValue}
         options={optionsArray}
-        classNamePrefix="select"
         className="basic-multi-select"
+        classNamePrefix="select"
         onChange={handleChange}
+        name={name}
       />
     </div>
   );
 };
-
 MultiSelectField.propTypes = {
-  options: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+  options: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   onChange: PropTypes.func,
   name: PropTypes.string,
   label: PropTypes.string,

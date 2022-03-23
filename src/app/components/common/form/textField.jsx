@@ -1,53 +1,37 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-const TextField = ({
-  label,
-  type,
-  name,
-  value,
-  onChange,
-  error,
-  placeholder,
-  noDetecting
-}) => {
-  const [showPassword, setShowPassword] = useState();
+const TextField = ({ label, type, name, value, onChange, error }) => {
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = ({ target }) => {
     onChange({ name: target.name, value: target.value });
   };
-
   const getInputClasses = () => {
-    if (!noDetecting)
-      return "form-control" + (error ? " is-invalid" : " is-valid");
-    else return "form-control";
+    return "form-control" + (error ? " is-invalid" : "");
   };
-
   const toggleShowPassword = () => {
-    setShowPassword((prev) => !prev);
+    setShowPassword((prevState) => !prevState);
   };
-
   return (
     <div className="mb-4">
-      {label && <label htmlFor={name}>{label}</label>}
-
+      <label htmlFor={name}>{label}</label>
       <div className="input-group has-validation">
         <input
-          name={name}
-          type={!showPassword ? type : "text"}
+          type={showPassword ? "text" : type}
           id={name}
+          name={name}
           value={value}
           onChange={handleChange}
           className={getInputClasses()}
-          placeholder={placeholder}
         />
         {type === "password" && (
           <button
-            onClick={toggleShowPassword}
             className="btn btn-outline-secondary"
             type="button"
+            onClick={toggleShowPassword}
           >
-            <i className={"bi bi-eye" + (showPassword ? "" : "-slash")}></i>
+            <i className={"bi bi-eye" + (showPassword ? "-slash" : "")}></i>
           </button>
         )}
         {error && <div className="invalid-feedback">{error}</div>}
@@ -55,20 +39,16 @@ const TextField = ({
     </div>
   );
 };
-
 TextField.defaultProps = {
   type: "text"
 };
-
 TextField.propTypes = {
   label: PropTypes.string,
   type: PropTypes.string,
   name: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
-  error: PropTypes.string,
-  placeholder: PropTypes.string,
-  noDetecting: PropTypes.bool
+  error: PropTypes.string
 };
 
 export default TextField;

@@ -1,104 +1,69 @@
 import React, { useEffect, useState } from "react";
-import TextField from "../common/form/textField";
 import { validator } from "../../utils/validator";
-import CheckboxField from "../common/form/checkboxField";
+import TextField from "../common/form/textField";
+import CheckBoxField from "../common/form/checkBoxField";
 import { useAuth } from "../../hooks/useAuth";
 import { useHistory } from "react-router-dom";
-// import * as yup from "yup";
 
 const LoginForm = () => {
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+    stayOn: false
+  });
   const history = useHistory();
-
-  const { signIn } = useAuth();
-  const [data, setData] = useState({ email: "", password: "", stayOn: "" });
+  const { logIn } = useAuth();
   const [errors, setErrors] = useState({});
-
-  useEffect(() => {
-    validate();
-  }, [data]);
-
-  // const validateScheme = yup.object().shape({
-  //   password: yup
-  //     .string()
-  //     .required("Пароль обязателен к заполнению")
-  //     .matches(
-  //       /(?=.*[A-Z])/,
-  //       "Пароль должен содержать хотябы одну заглавную букву"
-  //     )
-  //     .matches(/(?=.*[0-9])/, "Пароль должен содержать хотябы одну цифру")
-  //     .matches(
-  //       /(?=.*[!#*@$%&])/,
-  //       "Пароль должен содержать хотябы один спецсимвол !#*@$%&"
-  //     )
-  //     .matches(/(?=.{8,})/, "Пароль должен состоять минимум из 8ми символов"),
-  //   email: yup
-  //     .string()
-  //     .required("Электронная почта обязательна к заполнению")
-  //     .email("Email введен некорректно")
-  // });
+  const [enterError, setEnterError] = useState(null);
+  const handleChange = (target) => {
+    setData((prevState) => ({
+      ...prevState,
+      [target.name]: target.value
+    }));
+    setEnterError(null);
+  };
 
   const validatorConfig = {
     email: {
-      isRequired: { message: "Электронная почта обязательна к заполнению" },
-      isEmail: { message: "Email введен некорректно" }
+      isRequired: {
+        message: "Электронная почта обязательна для заполнения"
+      }
     },
     password: {
-      isRequired: { message: "Пароль обязателен к заполнению" },
-      isCapitalSymbol: {
-        message: "Пароль должен содержать хотябы одну заглавную букву"
-      },
-      isContainDigit: {
-        message: "Пароль должен содержать хотябы одну цифру"
-      },
-      min: {
-        value: 8,
-        message: `Пароль должен содержать минимум 8 символов`
+      isRequired: {
+        message: "Пароль обязателен для заполнения"
       }
     }
   };
-
-  const handleChange = (target) => {
-    // console.log(target);
-    if (target) {
-      setData((prevData) => ({
-        ...prevData,
-        [target.name]: target.value
-      }));
-    }
+  useEffect(() => {
+    validate();
+  }, [data]);
+  const validate = () => {
+    const errors = validator(data, validatorConfig);
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
   };
+  const isValid = Object.keys(errors).length === 0;
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const isValidate = validate();
-    // console.log(errors);
-    if (isValidate) return;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const isValid = validate();
+    if (!isValid) return;
+
     try {
-      await signIn(data);
+      await logIn(data);
+
       history.push(
         history.location.state ? history.location.state.from.pathname : "/"
       );
     } catch (error) {
-      setErrors(error);
+      setEnterError(error.message);
     }
-    // console.log(data);
   };
-
-  const validate = () => {
-    const errors = validator(data, validatorConfig);
-    // validateScheme
-    //   .validate(data)
-    //   .then(() => setErrors({}))
-    //   .catch((err) => setErrors({ [err.path]: err.message }));
-    setErrors(errors);
-    return Object.keys(errors) === 0;
-  };
-
-  const isValid = Object.keys(errors).length === 0;
-
   return (
     <form onSubmit={handleSubmit}>
       <TextField
-        label="Эл. почта"
+        label="Электронная почта"
         name="email"
         value={data.email}
         onChange={handleChange}
@@ -112,15 +77,14 @@ const LoginForm = () => {
         onChange={handleChange}
         error={errors.password}
       />
-
-      <CheckboxField name="stayOn" value={data.license} onChange={handleChange}>
-        Запомнить меня
-      </CheckboxField>
-
+      <CheckBoxField value={data.stayOn} onChange={handleChange} name="stayOn">
+        Оставаться в системе
+      </CheckBoxField>
+      {enterError && <p className="text-danger">{enterError}</p>}
       <button
-        type="submit"
         className="btn btn-primary w-100 mx-auto"
-        disabled={!isValid}
+        type="submit"
+        disabled={!isValid || enterError}
       >
         Submit
       </button>

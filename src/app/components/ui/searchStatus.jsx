@@ -1,28 +1,27 @@
 import React from "react";
 import PropTypes from "prop-types";
-
-const SearchStatus = ({ usersNumber }) => {
+const SearchStatus = ({ length }) => {
   const renderPhrase = (number) => {
-    const plural = [2, 3, 4];
-
-    let human = "человек";
-    if (plural.includes(number % 10)) human = "человекa";
-    if (number > 10 && number < 20) human = "человек";
-    return number !== 0 ? (
-      <h1 className="badge fs-4 bg-primary m-2">
-        С тобой хотят встретиться {number} {human}.
-      </h1>
-    ) : (
-      <h1 className="badge fs-4 bg-danger m-2">
-        С тобой ещё никто не захотел встретиться.
-      </h1>
-    );
+    const lastOne = Number(number.toString().slice(-1));
+    if (number > 4 && number < 15) {
+      return "человек тусанет";
+    }
+    if (lastOne === 1) return "человек тусанет";
+    if ([2, 3, 4].indexOf(lastOne) >= 0) return "человека тусанут";
+    return "человек тусанет";
   };
-  return <>{renderPhrase(usersNumber)}</>;
+  return (
+    <h2>
+      <span className={"badge " + (length > 0 ? "bg-primary" : "bg-danger")}>
+        {length > 0
+          ? `${length + " " + renderPhrase(length)}   с тобой сегодня`
+          : "Никто с тобой не тусанет"}
+      </span>
+    </h2>
+  );
 };
-
 SearchStatus.propTypes = {
-  usersNumber: PropTypes.number.isRequired
+  length: PropTypes.number
 };
 
 export default SearchStatus;

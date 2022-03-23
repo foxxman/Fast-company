@@ -1,49 +1,41 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const TextAreaField = ({
-  label,
-  name,
-  value,
-  onChange,
-  error,
-  placeholder
-}) => {
+const TextAreaField = ({ label, name, value, onChange, error }) => {
   const handleChange = ({ target }) => {
     onChange({ name: target.name, value: target.value });
+  };
+  const getInputClasses = () => {
+    return "form-control" + (error ? " is-invalid" : "");
   };
 
   return (
     <div className="mb-4">
-      {label && (
-        <label className="form-label" htmlFor={name}>
-          {label}
-        </label>
-      )}
-
+      <label htmlFor={name}> {label}</label>
       <div className="input-group has-validation">
         <textarea
-          className="form-control"
-          name={name}
           id={name}
+          name={name}
           value={value}
-          placeholder={placeholder}
           onChange={handleChange}
-          rows="3"
-        ></textarea>
-        {error && <div className="invalid-feedback">{error}</div>}
+          className={getInputClasses()}
+        />
+
+        {error && <div className="invalid-feedback ">{error}</div>}
       </div>
     </div>
   );
 };
-
+TextAreaField.defaultProps = {
+  type: "text"
+};
 TextAreaField.propTypes = {
   label: PropTypes.string,
+  type: PropTypes.string,
   name: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
-  error: PropTypes.string,
-  placeholder: PropTypes.string
+  error: PropTypes.string
 };
 
 export default TextAreaField;
